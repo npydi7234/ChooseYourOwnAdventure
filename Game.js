@@ -8,7 +8,7 @@ const GameState = Object.freeze({
     FARONPEAK: Symbol("faronpeak"),
     NECLUDA: Symbol("necluda"),
     QUICKSAND: Symbol("quicksand"),
-    RIVERBANK: Symbol("riverbank"),    
+    RIVERBANK: Symbol("riverbank"),
     LANARYUCAVE: Symbol("lanaryucave"),
     LANARYUTOWER: Symbol("lanaryutower"),
     NOISES: Symbol("noises"),
@@ -41,7 +41,7 @@ module.exports = class Game {
                     this.stateCur = GameState.HYRULESOUTH;
                 } else sReply.push("Do you want to go NORTH or SOUTH? ");
                 break;
-                
+
             case GameState.HYRULENORTH:
                 if (sInput.toLowerCase().match("cave")) {
                     sReply.push("You bravely entered a dark cave. A hungry Lion attacked you. Your adventure ENDS here. Play again!");
@@ -49,7 +49,7 @@ module.exports = class Game {
                 } else if (sInput.toLowerCase().match("tower")) {
                     sReply.push("You are on top of the Lanaryu tower. You hear noises from east side and you see smoke coming from west side of tower. Which direction you want to choose, EAST or WEST?");
                     this.stateCur = GameState.LANARYUTOWER;
-                }else sReply.push("Do you want to go towards TOWER or CAVE?");
+                } else sReply.push("Do you want to go towards TOWER or CAVE?");
                 break;
 
             case GameState.LANARYUTOWER:
@@ -95,7 +95,7 @@ module.exports = class Game {
                 } else sReply.push("Do you want to go EAST or WEST or SOUTH?");
                 break;
 
-                case GameState.FARON:
+            case GameState.FARON:
                 if (sInput.toLowerCase().match("left")) {
                     sReply.push("You climbed top of Faron Peak. Its very cold. You could barely see a fire on your east side and you see a rope way on your west side. You want to choose EAST or WEST?");
                     this.stateCur = GameState.FARONPEAK;
@@ -105,17 +105,15 @@ module.exports = class Game {
                 } else sReply.push("Do you choose LEFT or RIGHT?");
                 break;
 
-                case GameState.FARONPEAK:
-                    if (sInput.toLowerCase().match("east")) {
-                        sReply.push("Congratulations! You are on your way to civilization. You WIN.");
-                        this.stateCur = GameState.WELCOMING;
-                    } else if (sInput.toLowerCase().match("west")) {
-                        sReply.push("Unfortunately the cable car stuck in the middle of the way. Wolves are circling beneath the cable car. Your game ENDS here. Play again.");
-                        this.stateCur = GameState.WELCOMING;
-                    } else sReply.push("You want to choose EAST or WEST?");
-                    break;
-
-
+            case GameState.FARONPEAK:
+                if (sInput.toLowerCase().match("east")) {
+                    sReply.push("Congratulations! You are on your way to civilization. You WIN.");
+                    this.stateCur = GameState.WELCOMING;
+                } else if (sInput.toLowerCase().match("west")) {
+                    sReply.push("Unfortunately the cable car stuck in the middle of the way. Wolves are circling beneath the cable car. Your game ENDS here. Play again.");
+                    this.stateCur = GameState.WELCOMING;
+                } else sReply.push("You want to choose EAST or WEST?");
+                break;
 
             case GameState.NECLUDA:
                 if (sInput.toLowerCase().match("left")) {
