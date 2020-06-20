@@ -5,6 +5,7 @@ const GameState = Object.freeze({
     HYRULENORTH: Symbol("hyrulenorth"),
     GARUDO: Symbol("garudo"),
     FARON: Symbol("faron"),
+    FARONPEAK: Symbol("faronpeak"),
     NECLUDA: Symbol("necluda"),
     QUICKSAND: Symbol("quicksand"),
     RIVERBANK: Symbol("riverbank"),    
@@ -86,13 +87,35 @@ module.exports = class Game {
                     sReply.push("You reached Garudo desert land. On your left you hear whistling winds of desert valleys. On your right you hear birds chirping and you see birds flying. You want to choose LEFT or RIGHT? ");
                     this.stateCur = GameState.GARUDO;
                 } else if (sInput.toLowerCase().match("south")) {
-                    sReply.push("You have reached Feron, the freezing snow land. You chose never ending snow path. If you survive of snow storms, navigate yourself to civilization. You lost the connection to game. Your adventure ENDS here. Play again!");
-                    this.stateCur = GameState.WELCOMING;
+                    sReply.push("You have reached Faron, the freezing snow land. On your left you see a snow hill, the Faron Peak. On your right you see a frozen lake. Do you want to go LEFT or RIGHT?");
+                    this.stateCur = GameState.FARON;
                 } else if (sInput.toLowerCase().match("east")) {
                     sReply.push("You reached green grass fields of Necluda. On your far right, you see rocky hill. On your left, you see muddy puddle. Do you choose LEFT or RIGHT?  ");
                     this.stateCur = GameState.NECLUDA;
                 } else sReply.push("Do you want to go EAST or WEST or SOUTH?");
                 break;
+
+                case GameState.FARON:
+                if (sInput.toLowerCase().match("left")) {
+                    sReply.push("You climbed top of Faron Peak. Its very cold. You could barely see a fire on your east side and you see a rope way on your west side. You want to choose EAST or WEST?");
+                    this.stateCur = GameState.FARONPEAK;
+                } else if (sInput.toLowerCase().match("right")) {
+                    sReply.push("Unfortunately you walked on a thin sheet of ice path. The ice started craking under your feet and you started drowning. Your game ENDS here. Play again.");
+                    this.stateCur = GameState.WELCOMING;
+                } else sReply.push("Do you choose LEFT or RIGHT?");
+                break;
+
+                case GameState.FARONPEAK:
+                    if (sInput.toLowerCase().match("east")) {
+                        sReply.push("Congratulations! You are on your way to civilization. You WIN.");
+                        this.stateCur = GameState.WELCOMING;
+                    } else if (sInput.toLowerCase().match("west")) {
+                        sReply.push("Unfortunately the cable car stuck in the middle of the way. Wolves are circling beneath the cable car. Your game ENDS here. Play again.");
+                        this.stateCur = GameState.WELCOMING;
+                    } else sReply.push("You want to choose EAST or WEST?");
+                    break;
+
+
 
             case GameState.NECLUDA:
                 if (sInput.toLowerCase().match("left")) {
