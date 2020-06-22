@@ -1,6 +1,10 @@
 const GameState = Object.freeze({
     WELCOMING: Symbol("welcoming"),
     HYRULE: Symbol("hyrule"),
+    HYRULEWEST: Symbol("hyrulewest"),
+    TABANTAFRONTIER: Symbol("tabantafrontier"),
+    TABANTATOWER: Symbol("tabantatower"),
+    TABANTATUNDRA: Symbol("tabantatundra"),
     HYRULESOUTH: Symbol("hyrulesouth"),
     HYRULENORTH: Symbol("hyrulenorth"),
     GARUDO: Symbol("garudo"),
@@ -28,7 +32,7 @@ module.exports = class Game {
                 sReply.push("Welcome to Kingdom of HyRule Adventures!");
                 sReply.push("Your ship got wrecked. You floated to the Kingdom of Central HyRule beach.");
                 sReply.push("Your goal is to reach civilization.");
-                sReply.push("Do you want to go NORTH or SOUTH?");
+                sReply.push("Do you want to go NORTH or SOUTH or WEST?");
                 this.stateCur = GameState.HYRULE;
                 break;
 
@@ -39,8 +43,42 @@ module.exports = class Game {
                 } else if (sInput.toLowerCase().match("south")) {
                     sReply.push("You are in front of treacherous Zora river. Do you want to cross the river on a RAFT or SWIM across the river?");
                     this.stateCur = GameState.HYRULESOUTH;
-                } else sReply.push("Do you want to go NORTH or SOUTH? ");
+                } else if (sInput.toLowerCase().match("west")) {
+                    sReply.push("You are in front of Tabanta Frontier. Which direction you want to choose now, SOUTH or NORTH?");
+                    this.stateCur = GameState.HYRULEWEST;
+                } else sReply.push("Do you want to go NORTH or SOUTH or WEST? ");
                 break;
+
+            case GameState.HYRULEWEST:
+                if (sInput.toLowerCase().match("south")) {
+                    sReply.push("You reached Tabanta Tower. On your left you see a river flowing, on your right you see a bushy forest. You want to go LEFT or RIGHT?");
+                    this.stateCur = GameState.TABANTATOWER;
+                } else if (sInput.toLowerCase().match("north")) {
+                    sReply.push("You reached Tabanta Tundra, the snowland. On your left you feel a sedative perfume smell. On your right you smell fishes. Which way you want to go LEFT or RIGHT?");
+                    this.stateCur = GameState.TABANTATUNDRA;
+                } else sReply.push("Which direction you want to choose now, SOUTH or NORTH?");
+                break;
+
+            case GameState.TABANTATOWER:
+                if (sInput.toLowerCase().match("left")) {
+                    sReply.push("Unfortunately river turned into edge of water fall. You fell from extreme high. Your adventure ENDS here. Play again!");
+                    this.stateCur = GameState.WELCOMING;
+                } else if (sInput.toLowerCase().match("right")) {
+                    sReply.push("You have been teleported to green grass fields of Necluda. On your far right, you see rocky hill. On your left, you see muddy puddle. Do you choose LEFT or RIGHT?  ");
+                    this.stateCur = GameState.NECLUDA;
+                } else sReply.push("Which way you want to go LEFT or RIGHT?");
+                break;
+
+            case GameState.TABANTATUNDRA:
+                if (sInput.toLowerCase().match("left")) {
+                    sReply.push("You followed sedative perfume smell made by Witches. You have been turned into a frog by the witches. Your adventure ENDS here. Play again!");
+                    this.stateCur = GameState.WELCOMING;
+                } else if (sInput.toLowerCase().match("right")) {
+                    sReply.push("You have been teleported to Faron, the freezing snow land. On your left you see a snow hill, the Faron Peak. On your right you see a frozen lake. Do you want to go LEFT or RIGHT?");
+                    this.stateCur = GameState.FARON;
+                } else sReply.push("You want to go LEFT or RIGHT?");
+                break;
+
 
             case GameState.HYRULENORTH:
                 if (sInput.toLowerCase().match("cave")) {
